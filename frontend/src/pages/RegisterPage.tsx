@@ -1,26 +1,26 @@
-// src/pages/LoginPage.tsx
+// src/pages/RegisterPage.tsx
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { login } from '../services/authService'
+import { register } from '../services/authService'
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      await login(email, password)
+      await register(email, password)
       navigate('/dashboard')
     } catch (err: any) {
-      alert(err.response?.data?.message || 'Error al iniciar sesión')
+      alert(err.response?.data?.message || 'Error al registrarse')
     }
   }
 
   return (
-    <form onSubmit={handleLogin}>
-      <h2>Iniciar Sesión</h2>
+    <form onSubmit={handleRegister}>
+      <h2>Registro</h2>
       <input
         type="email"
         placeholder="Correo"
@@ -35,12 +35,12 @@ const LoginPage = () => {
         onChange={(e) => setPassword(e.target.value)}
         required
       />
-      <button type="submit">Ingresar</button>
+      <button type="submit">Registrarse</button>
       <p>
-        ¿No tienes cuenta? <Link to="/register">Regístrate</Link>
+        ¿Ya tienes cuenta? <Link to="/login">Inicia sesión</Link>
       </p>
     </form>
   )
 }
 
-export default LoginPage
+export default RegisterPage

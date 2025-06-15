@@ -1,12 +1,14 @@
 // src/routes/jornadaRoutes.ts
 import { Router } from 'express'
-import { checkIn, checkOut, getWorkingDays } from '../controllers/workingDayController'
+import { createWorkingDay, getUserWorkingDays } from '../controllers/workingDayController'
 import { authenticateToken } from '../middlewares/auth'
-    
+
 const router = Router()
 
-router.post('/entrada', authenticateToken, checkIn)
-router.post('/salida', authenticateToken, checkOut)
-router.get('/', authenticateToken, getWorkingDays)
+// Ruta para registrar jornada manualmente (fecha, entrada, salida)
+router.post('/', authenticateToken, createWorkingDay)
+
+// Ruta para obtener el historial del usuario
+router.get('/', authenticateToken, getUserWorkingDays)
 
 export default router

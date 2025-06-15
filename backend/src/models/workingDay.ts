@@ -1,11 +1,10 @@
-// src/models/Jornada.ts
-import { Schema, model } from 'mongoose'
+import mongoose from 'mongoose'
 
-const workingDaySchema = new Schema({
+const workingDaySchema = new mongoose.Schema({
   userId: { type: String, required: true },
-  fecha: { type: String, required: true },
-  horaEntrada: String,
-  horaSalida: String
+  date: { type: String, required: true },
+  checkIn: { type: String, required: true },
+  checkOut: { type: String }
 })
 
-export const workingDay = model('Jornada', workingDaySchema)
+export const WorkingDay = mongoose.model('WorkingDay', workingDaySchema)
