@@ -12,8 +12,9 @@ export const loginUser = async (
   const { email, password } = req.body
 
   try {
-    const result = await pool.query('SELECT * FROM users WHERE email = $1', [email])
+        console.log(email, password)
 
+    const result = await pool.query('SELECT * FROM users WHERE email = $1', [email])
     if (result.rows.length === 0) {
       res.status(401).json({ message: 'Usuario no encontrado' })
       return
