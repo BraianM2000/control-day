@@ -1,7 +1,8 @@
-import { Request, Response } from 'express'
+// src/controllers/workingDayController.ts
+import { Response } from 'express'
 import { workingDay } from '../models/workingDay'
 
-export const ficharEntrada = async (req: Request, res: Response): Promise<void> => {
+export const checkIn = async (req: any, res: Response): Promise<void> => {
   try {
     const userId = req.user?.id
     const fechaHoy = new Date().toISOString().split('T')[0]
@@ -25,7 +26,7 @@ export const ficharEntrada = async (req: Request, res: Response): Promise<void> 
   }
 }
 
-export const ficharSalida = async (req: Request, res: Response): Promise<void> => {
+export const checkOut = async (req: any, res: Response): Promise<void> => {
   try {
     const userId = req.user?.id
     const fechaHoy = new Date().toISOString().split('T')[0]
@@ -45,7 +46,7 @@ export const ficharSalida = async (req: Request, res: Response): Promise<void> =
   }
 }
 
-export const obtenerJornadas = async (req: Request, res: Response): Promise<void> => {
+export const getWorkingDays = async (req: any, res: Response): Promise<void> => {
   try {
     const userId = req.user?.id
     const jornadas = await workingDay.find({ userId }).sort({ fecha: -1 })
