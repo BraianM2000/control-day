@@ -1,8 +1,7 @@
-// src/controllers/userController.ts
 import { Request, Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
-import { pool } from '../db/client'
+import { findUserByEmail } from '../models/userModel'
 
 export const loginUser = async (
   req: Request,
@@ -12,15 +11,13 @@ export const loginUser = async (
   const { email, password } = req.body
 
   try {
-        console.log(email, password)
+    const user = await findUserByEmail(email)
 
-    const result = await pool.query('SELECT * FROM users WHERE email = $1', [email])
-    if (result.rows.length === 0) {
+    if (!user) {
       res.status(401).json({ message: 'Usuario no encontrado' })
       return
     }
 
-    const user = result.rows[0]
     const isMatch = await bcrypt.compare(password, user.password)
 
     if (!isMatch) {
@@ -36,6 +33,6 @@ export const loginUser = async (
 
     res.json({ token })
   } catch (error) {
-    next(error) 
+    next(error)
   }
 }
