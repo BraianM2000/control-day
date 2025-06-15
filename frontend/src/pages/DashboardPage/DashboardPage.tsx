@@ -1,19 +1,20 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getWorkingDays, registerWorkingDay } from '../services/workingDaysService'
+import { getWorkingDays, registerWorkingDay } from '../../services/workingDaysService'
+import './DashboardPage.scss'
 
 type Jornada = {
-  fecha: string
-  horaEntrada: string
-  horaSalida?: string
+  date: string
+  checkIn: string
+  checkOut?: string
 }
 
 const DashboardPage = () => {
   const [jornadas, setJornadas] = useState<Jornada[]>([])
   const [form, setForm] = useState({
-    fecha: '',
-    horaEntrada: '',
-    horaSalida: '',
+    date: '',
+    checkIn: '',
+    checkOut: '',
   })
 
   const navigate = useNavigate()
@@ -44,13 +45,9 @@ const DashboardPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      await registerWorkingDay({
-        date: form.fecha,
-        checkIn: form.horaEntrada,
-        checkOut: form.horaSalida,
-      })
+      await registerWorkingDay(form)
       alert('Jornada registrada')
-      setForm({ fecha: '', horaEntrada: '', horaSalida: '' })
+      setForm({ date: '', checkIn: '', checkOut: '' })
 
       const res = await getWorkingDays()
       setJornadas(res.data)
@@ -65,29 +62,31 @@ const DashboardPage = () => {
   }
 
   return (
-    <div>
-      <h1>Panel de Control</h1>
-      <button onClick={handleLogout}>Cerrar sesión</button>
+    <div className="dashboard">
+      <div className="dashboard__header">
+        <h1>Panel de Control</h1>
+        <button className="logout-btn" onClick={handleLogout}>Cerrar sesión</button>
+      </div>
 
-      <form onSubmit={handleSubmit}>
+      <form className="dashboard__form" onSubmit={handleSubmit}>
         <h2>Registrar Jornada Manualmente</h2>
         <div>
           <label>Fecha: </label>
-          <input type="date" name="fecha" value={form.fecha} onChange={handleChange} required />
+          <input type="date" name="date" value={form.date} onChange={handleChange} required />
         </div>
         <div>
           <label>Hora de Entrada: </label>
-          <input type="time" name="horaEntrada" value={form.horaEntrada} onChange={handleChange} required />
+          <input type="time" name="checkIn" value={form.checkIn} onChange={handleChange} required />
         </div>
         <div>
           <label>Hora de Salida: </label>
-          <input type="time" name="horaSalida" value={form.horaSalida} onChange={handleChange} required />
+          <input type="time" name="checkOut" value={form.checkOut} onChange={handleChange} required />
         </div>
         <button type="submit">Registrar Jornada</button>
       </form>
 
       <h2>Historial de Jornadas</h2>
-      <table border={1}>
+      <table className="dashboard__table">
         <thead>
           <tr>
             <th>Fecha</th>
@@ -98,9 +97,9 @@ const DashboardPage = () => {
         <tbody>
           {jornadas.map((j, i) => (
             <tr key={i}>
-              <td>{j.fecha}</td>
-              <td>{j.horaEntrada}</td>
-              <td>{j.horaSalida || '-'}</td>
+              <td>{j.date}</td>
+              <td>{j.checkIn}</td>
+              <td>{j.checkOut || '-'}</td>
             </tr>
           ))}
         </tbody>

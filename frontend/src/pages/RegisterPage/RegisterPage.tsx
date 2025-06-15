@@ -1,7 +1,8 @@
 // src/pages/RegisterPage.tsx
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { register } from '../services/authService'
+import { register } from '../../services/authService'
+import './RegisterPage.scss'
 
 const RegisterPage = () => {
   const [email, setEmail] = useState('')
@@ -19,6 +20,7 @@ const RegisterPage = () => {
   }
 
   return (
+    <div className="register-page">
     <form onSubmit={handleRegister}>
       <h2>Registro</h2>
       <input
@@ -40,6 +42,7 @@ const RegisterPage = () => {
         ¿Ya tienes cuenta? <Link to="/login">Inicia sesión</Link>
       </p>
     </form>
+    </div>
   )
 }
 

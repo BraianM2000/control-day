@@ -1,9 +1,9 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
-import LoginPage from './pages/LoginPage'
-import RegisterPage from './pages/RegisterPage'
-import DashboardPage from './pages/DashboardPage'
-import ProtectedRoute from './components/ProtectedRoute'
+import LoginPage from './pages/LoginPage/LoginPage'
+import RegisterPage from './pages/RegisterPage/RegisterPage'
+import DashboardPage from './pages/DashboardPage/DashboardPage'
 import { isAuthenticated } from './services/authService'
+import ProtectedRoute from './components/ProtectedRoute'
 
 const App = () => {
   const loggedIn = isAuthenticated()
