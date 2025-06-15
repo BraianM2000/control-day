@@ -1,3 +1,5 @@
+@use './variables' as vars;
+
 @mixin center {
   display: flex;
   justify-content: center;
@@ -7,6 +9,6 @@
 @mixin card {
   background-color: #fff;
   padding: 1rem;
-  border-radius: $border-radius;
+  border-radius: vars.$border-radius;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }

@@ -1,5 +1,6 @@
-@import '../../styles/variables';
-@import '../../styles/mixins';
+@use '../../styles/variables' as vars;
+@use '../../styles/mixins' as mix;
+
 
 .dashboard {
   max-width: 800px;
@@ -13,34 +14,34 @@
     margin-bottom: 2rem;
 
     h1 {
-      color: $primary;
+      color: vars.$primary;
       font-size: 2rem;
     }
 
     .logout-btn {
-      background-color: $secondary;
+      background-color: vars.$secondary;
       padding: 0.5rem 1.2rem;
       border: none;
       color: white;
-      border-radius: $border-radius;
+      border-radius: vars.$border-radius;
       cursor: pointer;
       font-weight: bold;
       font-size: 0.95rem;
       transition: background-color 0.3s;
 
       &:hover {
-        background-color: darken($secondary, 10%);
+        background-color: vars.$secondary;
       }
     }
   }
 
   &__form {
-    @include card;
+    @include mix.card;
     margin-bottom: 2rem;
 
     h2 {
       margin-top: 0;
-      color: $primary;
+      color: vars.$primary;
     }
 
     div {
@@ -56,22 +57,22 @@
     input {
       width: 95%;
       padding: 0.5rem;
-      border-radius: $border-radius;
+      border-radius: vars.$border-radius;
       border: 1px solid #ccc;
     }
 
     button {
       margin-top: 1rem;
-      background-color: $primary;
+      background-color: vars.$primary;
       color: white;
       border: none;
       padding: 0.6rem 1.2rem;
-      border-radius: $border-radius;
+      border-radius: vars.$border-radius;
       cursor: pointer;
       font-weight: bold;
 
       &:hover {
-        background-color: darken($primary, 10%);
+        background-color: vars.$primary;
       }
     }
   }
@@ -80,17 +81,18 @@
     width: 100%;
     border-collapse: collapse;
     background-color: white;
-    border-radius: $border-radius;
+    border-radius: vars.$border-radius;
     overflow: hidden;
 
-    th, td {
+    th,
+    td {
       padding: 0.75rem;
       border: 1px solid #ddd;
       text-align: center;
     }
 
     th {
-      background-color: $primary;
+      background-color: vars.$primary;
       color: white;
     }
   }

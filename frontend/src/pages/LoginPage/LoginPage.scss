@@ -1,14 +1,14 @@
-@import '../../styles/variables';
-@import '../../styles/mixins';
+@use '../../styles/variables';
+@use '../../styles/mixins' as mix;
 
 .login-page {
   margin-top: 5rem;
 
   form {
-    @include card;
+    @include mix.card;
 
     input {
-      width: 100%;
+      width: 95%;
     }
 
     button {

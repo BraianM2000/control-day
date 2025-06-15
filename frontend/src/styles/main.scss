@@ -1,15 +1,15 @@
-@import './variables';
-@import './mixins';
+@use './variables' as vars;
+@use './mixins' as mix;
 
 body {
     font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background-color: $bg;
+    background-color: vars.$bg;
     margin: 0;
-    color: $text;
+    color: vars.$text;
 }
 
 form {
-    @include card;
+    @include mix.card;
     max-width: 400px;
     margin: 2rem auto;
     display: flex;
@@ -19,19 +19,19 @@ form {
     input {
         padding: 0.5rem;
         border: 1px solid #ccc;
-        border-radius: $border-radius;
+        border-radius: vars.$border-radius;
     }
 
     button {
-        background-color: $primary;
+        background-color: vars.$primary;
         color: white;
         padding: 0.6rem;
         border: none;
-        border-radius: $border-radius;
+        border-radius: vars.$border-radius;
         cursor: pointer;
 
         &:hover {
-            background-color: darken($primary, 10%);
+            background-color: vars.$primary;
         }
     }
 }
