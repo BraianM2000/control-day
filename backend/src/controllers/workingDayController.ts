@@ -1,57 +1,34 @@
-// src/controllers/workingDayController.ts
-import { Response } from 'express'
-import { workingDay } from '../models/workingDay'
+import { Request, Response } from 'express'
+import { WorkingDay  } from '../models/workingDay'
+export const createWorkingDay = async (req: any, res: Response): Promise<void> => {
 
-export const checkIn = async (req: any, res: Response): Promise<void> => {
   try {
     const userId = req.user?.id
-    const fechaHoy = new Date().toISOString().split('T')[0]
-    const horaActual = new Date().toTimeString().split(' ')[0]
+    const { date, checkIn, checkOut } = req.body
 
-    const yaFichado = await workingDay.findOne({ userId, fecha: fechaHoy })
-    if (yaFichado) {
-      res.status(400).json({ message: 'Ya fichaste hoy' })
+    const exists = await WorkingDay.findOne({ userId, date })
+    if (exists) {
+      res.status(400).json({ message: 'Working day already exists for this date' })
       return
     }
 
-    const nuevaJornada = new workingDay({
-      userId,
-      fecha: fechaHoy,
-      horaEntrada: horaActual
-    })
-    await nuevaJornada.save()
-    res.json({ message: 'Entrada registrada' })
+    const newDay = new WorkingDay({ userId, date, checkIn, checkOut })
+    await newDay.save()
+
+    res.status(201).json({ message: 'Working day registered successfully' })
   } catch (err) {
-    res.status(500).json({ message: 'Error interno al fichar entrada' })
+      console.error('Error al registrar jornada:', err)
+
+    res.status(500).json({ message: 'Error registering working day' })
   }
 }
 
-export const checkOut = async (req: any, res: Response): Promise<void> => {
+export const getUserWorkingDays = async (req: any, res: Response): Promise<void> => {
   try {
     const userId = req.user?.id
-    const fechaHoy = new Date().toISOString().split('T')[0]
-    const horaActual = new Date().toTimeString().split(' ')[0]
-
-    const jornada = await workingDay.findOne({ userId, fecha: fechaHoy })
-    if (!jornada) {
-      res.status(404).json({ message: 'No hay jornada registrada' })
-      return
-    }
-
-    jornada.horaSalida = horaActual
-    await jornada.save()
-    res.json({ message: 'Salida registrada' })
+    const workingDays = await WorkingDay.find({ userId }).sort({ date: -1 })
+    res.json(workingDays)
   } catch (err) {
-    res.status(500).json({ message: 'Error interno al fichar salida' })
-  }
-}
-
-export const getWorkingDays = async (req: any, res: Response): Promise<void> => {
-  try {
-    const userId = req.user?.id
-    const jornadas = await workingDay.find({ userId }).sort({ fecha: -1 })
-    res.json(jornadas)
-  } catch (err) {
-    res.status(500).json({ message: 'Error al obtener jornadas' })
+    res.status(500).json({ message: 'Error retrieving working days' })
   }
 }

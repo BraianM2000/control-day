@@ -1,0 +1,99 @@
+@use '../../styles/variables' as vars;
+@use '../../styles/mixins' as mix;
+
+
+.dashboard {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    h1 {
+      color: vars.$primary;
+      font-size: 2rem;
+    }
+
+    .logout-btn {
+      background-color: vars.$secondary;
+      padding: 0.5rem 1.2rem;
+      border: none;
+      color: white;
+      border-radius: vars.$border-radius;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.95rem;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: vars.$secondary;
+      }
+    }
+  }
+
+  &__form {
+    @include mix.card;
+    margin-bottom: 2rem;
+
+    h2 {
+      margin-top: 0;
+      color: vars.$primary;
+    }
+
+    div {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 0.25rem;
+    }
+
+    input {
+      width: 95%;
+      padding: 0.5rem;
+      border-radius: vars.$border-radius;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      margin-top: 1rem;
+      background-color: vars.$primary;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: vars.$border-radius;
+      cursor: pointer;
+      font-weight: bold;
+
+      &:hover {
+        background-color: vars.$primary;
+      }
+    }
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: vars.$border-radius;
+    overflow: hidden;
+
+    th,
+    td {
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+
+    th {
+      background-color: vars.$primary;
+      color: white;
+    }
+  }
+}

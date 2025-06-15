@@ -1,0 +1,18 @@
+@use '../../styles/variables';
+@use '../../styles/mixins' as mix;
+
+.register-page {
+  margin-top: 5rem;
+
+  form {
+    @include mix.card;
+
+    input {
+      width: 95%;
+    }
+
+    button {
+      width: 100%;
+    }
+  }
+}

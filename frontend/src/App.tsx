@@ -1,13 +1,27 @@
-// src/App.tsx
-import { Routes, Route } from 'react-router-dom'
-import LoginPage from './pages/LoginPage'
-import DashboardPage from './pages/DashboardPage'
+import { Routes, Route, Navigate } from 'react-router-dom'
+import LoginPage from './pages/LoginPage/LoginPage'
+import RegisterPage from './pages/RegisterPage/RegisterPage'
+import DashboardPage from './pages/DashboardPage/DashboardPage'
+import { isAuthenticated } from './services/authService'
+import ProtectedRoute from './components/ProtectedRoute'
 
-function App() {
+const App = () => {
+  const loggedIn = isAuthenticated()
+
   return (
     <Routes>
-      <Route path="/" element={<LoginPage />} />
-      <Route path="/dashboard" element={<DashboardPage />} />
+      <Route path="/" element={<Navigate to={loggedIn ? "/dashboard" : "/login"} />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <DashboardPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   )
 }
